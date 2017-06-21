@@ -179,49 +179,161 @@ var obj2 = {
 */
 //자바스크리트는 클래스가 없다. 함수가 존재하고 메소드가 존재하지 않음
 
+//
+// var art1 = {
+//     articleId :1,
+//     title: 'hello',
+//     author:'kim',
+//     content:'테스트에요..'
+//
+// };
+//
+// var art2 = {
+//     articleId:2,
+//     title : '제목',
+//     author:'lee',
+//     content:'테스트입니다.',
+//     add: function (a,b) {
+//         return a+b;
+//     },
+//     sub: function (a,b) {
+//         return a- b;
+//     }
+// };
+//
+// console.log(art2.add(3,5));
+//
+//
+// var artList =
+//     [
+//         {
+//             articleId :1,
+//              title: 'hello',
+//             author:'kim',
+//             content:'테스트에요..'
+//        },
+//         {
+//             articleId:2,
+//             title : '제목',
+//             author:'lee',
+//             content:'테스트입니다.'
+//          }
+//     ];
+//
+//
+//
+// var theText =$('h1').text();
+// console.log(theText);
+//
+// $('h1').text('너 어디가니?');
+//
+// var thecontent = $('p').text();/
+// console.log(thecontent);
 
-var art1 = {
-    articleId :1,
-    title: 'hello',
-    author:'kim',
-    content:'테스트에요..'
+// $('p').text('hello');
 
-};
+jQuery(document).ready(function () {
 
-var art2 = {
-    articleId:2,
-    title : '제목',
-    author:'lee',
-    content:'테스트입니다.',
-    add: function (a,b) {
-        return a+b;
-    },
-    sub: function (a,b) {
-        return a- b;
-    }
-};
+    $('#myForm').on('click','input:button',function () {
 
-console.log(art2.add(3,5));
+        $.ajax('https://api.github.com/users/suns303',{
+            success:function (response) {
+                var login = response.login;
+                var id = response.id;
+                var loc = response.location;
+                var cAt =response.created_at;
+
+                $('#destinations')
+                    .children(':first-child')
+                    .children('h2')
+                    .text(login);
+                $('#destinations')
+                    .children(':nth-child(2)')
+                    .text(id);
+                $('#destinations')
+                    .children(':nth-child(3)')
+                    .text(loc);
+                $('#destinations')
+                    .children(':nth-child(4)')
+                    .text(cAt);
+
+            }
+        });
+    });
+
+    $('#destinations').on('mouseenter','li:nth-child(2)', function () {
+        $(this).parent('#destinations').children('li:last-child').slideUp()
+
+    });
+
+    $('#destinations').on('mouseout','li:nth-child(2)', function () {
+        $(this).parent('#destinations').children('li:last-child').fadeIn();
+
+    });
+
+    $('#myForm').on('keyup','input:text', function () {
+        //1.텍스트박스에 쓴 숫자를 가지고 온다.
+        var howMany = isNaN(+$(this).val()) ? 0 : +$(this).val();
+        // console.log(howMany);
+
+        $('#destinations')
+            .children('li:last-child')
+            .children('span')
+            .text(howMany*562);
+
+    });
+
+    // $(document).ready(function () {
+    //     $('.vacation').on('keyup','.quantity',function () {
+    //         var price = +$(this).closest('.vacation').data('price');
+    //         var quantity =+$(this).val();
+    //         $('#total').text(price*quantity);
+    //
+    //     })
+    // })
 
 
-var artList =
-    [
-        {
-            articleId :1,
-             title: 'hello',
-            author:'kim',
-            content:'테스트에요..'
-       },
-        {
-            articleId:2,
-            title : '제목',
-            author:'lee',
-            content:'테스트입니다.'
-         }
-    ];
+    $('.vacation').on('click','button', function () {
 
 
 
+        // $('#destinations').children('li.vacation').children('button').remove();
+        // 버튼위치에 가격이 나타나게한다.
+        var priceTag = $('<p>From $399.99</p>');
+        $(this).after(priceTag);
+        // 버튼 사라지게 한다.
+        $(this).remove();
+
+    });
+
+    /*
+     var priceTag = $('<p>From $399.99</p>');
+
+     $('#destinations').children('li.vacation').prepend(priceTag);
+
+     $('#destinations').children('li.promo').remove;
+     */
+
+    // $('li').first().next().text('seoul');
+
+
+
+/*
+    $('#destinations').find('li').text('seoul');
+    $('.promo');
+*/
+/*
+
+ $('#bookBigCon').children(ul).first().children('li').first().next()
+     .children('div.goods_img.bookp').children('span').children('a').children('img')
+
+
+    //#yDetailTopWrap > div.topColRgt > div.gd_infoBot > div.gd_infoTbArea > div.gd_infoTb > table > tbody > tr.accentRow >
+    // td > span > em
+ $('#yDetailTopWrap').children('div.topColRgt').children('div.gd_infoBot').children('div.gd_infoTbArea')
+     .children('div.gd_infoTb').children('table').children('tbody').children('tr.accentRow').children('td').children('span').children('em')
+*/
+});
 
 
 
